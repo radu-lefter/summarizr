@@ -8,6 +8,7 @@ dotenv.config({ path: './config/config.env' });
 
 // Load models
 const Summary = require('./models/Summary');
+const Translation = require('./models/Translation');
 
 // Connect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -20,10 +21,15 @@ const summaries = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/summaries.json`, 'utf-8')
 );
 
+const translations = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/translations.json`, 'utf-8')
+);
+
 // Import into DB
 const importData = async () => {
   try {
     await Summary.create(summaries);
+    await Translation.create(translations);
 
     console.log('Data Imported...'.green.inverse);
     process.exit();
@@ -36,6 +42,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Summary.deleteMany();
+    await Translation.deleteMany();
 
     console.log('Data Destroyed...'.red.inverse);
     process.exit();

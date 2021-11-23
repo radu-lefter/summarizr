@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const slugify = require('slugify');
 
 const SummarySchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: [true, "Please add a name"],
     unique: true,
@@ -17,7 +17,7 @@ const SummarySchema = new mongoose.Schema({
   },
   publicationDate: {
     type: String,
-    required: [true, "Please add a long summary"],
+    required: [true, "Please add a year"],
   },
   language: String,
   slug: String,
@@ -55,11 +55,31 @@ const SummarySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+}
+);
+
+// Cascade delete translations when a summary is deleted
+SummarySchema.pre('remove', async function(next) {
+  console.log(`translations being removed from summary ${this._id}`);
+  await this.model('Translation').deleteMany({ summary: this._id });
+  next();
+});
+
+// Reverse populate with virtuals
+SummarySchema.virtual('translations', {
+  ref: 'Translation',
+  localField: '_id',
+  foreignField: 'summary',
+  justOne: false
 });
 
 // Create summary slug from the name
 SummarySchema.pre('save', function(next) {
-  this.slug = slugify(this.name, { lower: true });
+  this.slug = slugify(this.title, { lower: true });
   next();
 });
 

@@ -7,7 +7,13 @@ const {
   deleteSummary
 } = require('../controllers/summaries');
 
+// Include other resource routers
+const translationRouter = require('./translations');
+
 const router = express.Router();
+
+// Re-route into other resource routers
+router.use('/:summaryId/translations', translationRouter);
 
 router
   .route('/')

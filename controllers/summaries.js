@@ -25,7 +25,7 @@ exports.getSummaries = asyncHandler(async (req, res, next) => {
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
   // Finding resource
-  query = Summary.find(JSON.parse(queryStr));
+  query = Summary.find(JSON.parse(queryStr)).populate('translations');
 
   // Select Fields
   if (req.query.select) {
@@ -135,13 +135,15 @@ exports.getSummaries = asyncHandler(async (req, res, next) => {
   // @access    Private
   exports.deleteSummary = asyncHandler(async (req, res, next) => {
 
-      const summary = await Summary.findByIdAndDelete(req.params.id);
+      const summary = await Summary.findById(req.params.id);
   
       if (!summary) {
         return next(
           new ErrorResponse(`Summary not found with id of ${req.params.id}`, 404)
         );
       }
+
+      summary.remove();
   
       res.status(200).json({ success: true, data: {} });
 

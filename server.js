@@ -15,6 +15,7 @@ connectDB();
 
 // Route files
 const summaries = require('./routes/summaries');
+const translations = require('./routes/translations');
 
 const app = express();
 
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'development') {
   
 // Mount routers
 app.use('/api/v1/summaries', summaries);
+app.use('/api/v1/translations', translations);
 
 app.use(errorHandler);
   
