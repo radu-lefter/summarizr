@@ -7,7 +7,15 @@ const asyncHandler = require('../middleware/async');
 // @access    Public
 exports.getSummaries = asyncHandler(async (req, res, next) => {
  
-    const summaries = await Summary.find();
+  let query;
+
+  let queryStr = JSON.stringify(req.query);
+
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+  query = Summary.find(JSON.parse(queryStr));
+
+  const summaries = await query;
 
     res
       .status(200)

@@ -19,6 +19,7 @@ const SummarySchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add a long summary"],
   },
+  language: String,
   slug: String,
   shortSum: {
     type: String,
