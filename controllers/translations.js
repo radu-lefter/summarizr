@@ -1,41 +1,33 @@
-const Translation = require('../models/Translation');
-const Summary = require('../models/Summary');
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-
+const Translation = require("../models/Translation");
+const Summary = require("../models/Summary");
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
 
 // @desc      Get translations
 // @route     GET /api/v1/translations
 // @route     GET /api/v1/summaries/:summaryId/translations
 // @access    Public
 exports.getTranslations = asyncHandler(async (req, res, next) => {
-    let query;
-  
-    if (req.params.summaryId) {
-      query = Translation.find({ summary: req.params.summaryId });
-    } else {
-      query = Translation.find().populate({
-        path: 'summary',
-        select: 'title author'
-      });
-    }
-  
-    const translations = await query;
-  
-    res.status(200).json({
+  if (req.params.summaryId) {
+    const translations = await Translation.find({ summary: req.params.summaryId });
+
+    return res.status(200).json({
       success: true,
       count: translations.length,
-      data: translations
+      data: translations,
     });
-  });
+  } else {
+    res.status(200).json(res.advancedResults);
+  }
+});
 
 // @desc      Get single translation
 // @route     GET /api/v1/translations/:id
 // @access    Public
 exports.getTranslation = asyncHandler(async (req, res, next) => {
   const translation = await Translation.findById(req.params.id).populate({
-    path: 'summary',
-    select: 'title author'
+    path: "summary",
+    select: "title author",
   });
 
   if (!translation) {
@@ -47,7 +39,7 @@ exports.getTranslation = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: translation
+    data: translation,
   });
 });
 
@@ -70,7 +62,7 @@ exports.addTranslation = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: translation
+    data: translation,
   });
 });
 
@@ -89,12 +81,12 @@ exports.updateTranslation = asyncHandler(async (req, res, next) => {
 
   translation = await Translation.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
   res.status(200).json({
     success: true,
-    data: translation
+    data: translation,
   });
 });
 
@@ -115,6 +107,6 @@ exports.deleteTranslation = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: {},
   });
 });

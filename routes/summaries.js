@@ -13,6 +13,9 @@ const translationRouter = require('./translations');
 
 const router = express.Router();
 
+const Summary = require('../models/Summary');
+const advancedResults = require('../middleware/advancedResults');
+
 // Re-route into other resource routers
 router.use('/:summaryId/translations', translationRouter);
 
@@ -20,7 +23,7 @@ router.route('/:id/photo').put(summaryPhotoUpload);
 
 router
   .route('/')
-  .get(getSummaries)
+  .get(advancedResults(Summary, 'translations'), getSummaries)
   .post(createSummary);
 
 router
