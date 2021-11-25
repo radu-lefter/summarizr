@@ -4,7 +4,8 @@ const {
   getSummary,
   createSummary,
   updateSummary,
-  deleteSummary
+  deleteSummary,
+  summaryPhotoUpload
 } = require('../controllers/summaries');
 
 // Include other resource routers
@@ -14,6 +15,8 @@ const router = express.Router();
 
 // Re-route into other resource routers
 router.use('/:summaryId/translations', translationRouter);
+
+router.route('/:id/photo').put(summaryPhotoUpload);
 
 router
   .route('/')
