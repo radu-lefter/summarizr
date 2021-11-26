@@ -12,6 +12,8 @@ const advancedResults = require("../middleware/advancedResults");
 
 const router = express.Router({ mergeParams: true });
 
+const { protect, authorize } = require('../middleware/auth');
+
 router
   .route("/")
   .get(
@@ -21,12 +23,12 @@ router
     }),
     getTranslations
   )
-  .post(addTranslation);
+  .post(protect, authorize('publisher', 'admin'), addTranslation);
 
 router
   .route("/:id")
   .get(getTranslation)
-  .put(updateTranslation)
-  .delete(deleteTranslation);
+  .put(protect, authorize('publisher', 'admin'), updateTranslation)
+  .delete(protect, authorize('publisher', 'admin'), deleteTranslation);
 
 module.exports = router;
