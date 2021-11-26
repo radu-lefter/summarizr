@@ -15,6 +15,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.239Z",
     "slug": "emma",
+    "user": "5d7a514b5d2c12c7449be042",
     "__v": 0
 },
 {
@@ -33,6 +34,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.239Z",
     "slug": "persuasion",
+    "user": "5d7a514b5d2c12c7449be042",
     "__v": 0
 },
 {
@@ -51,6 +53,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.239Z",
     "slug": "northanger-abbey",
+    "user": "5d7a514b5d2c12c7449be042",
     "__v": 0
 },
 {
@@ -69,6 +72,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.238Z",
     "slug": "pride-and-prjudice",
+    "user": "5d7a514b5d2c12c7449be042",
     "__v": 0
 },
 {
@@ -87,6 +91,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.238Z",
     "slug": "mansfield-park",
+    "user": "5d7a514b5d2c12c7449be045",
     "__v": 0
 },
 {
@@ -105,6 +110,7 @@
     "photo": "no-photo.jpg",
     "createdAt": "2021-11-23T16:09:42.236Z",
     "slug": "sense-and-sensibility",
+    "user":"5d7a514b5d2c12c7449be045",
     "__v": 0
 }
 ]

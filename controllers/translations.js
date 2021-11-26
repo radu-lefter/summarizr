@@ -48,6 +48,7 @@ exports.getTranslation = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.addTranslation = asyncHandler(async (req, res, next) => {
   req.body.summary = req.params.summaryId;
+  req.body.user = req.user.id;
 
   const summary = await Summary.findById(req.params.summaryId);
 
@@ -55,6 +56,16 @@ exports.addTranslation = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`No summary with the id of ${req.params.summaryId}`),
       404
+    );
+  }
+
+  // Make sure user is summary owner
+  if (summary.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to add a translation to summary ${summary._id}`,
+        401
+      )
     );
   }
 
@@ -79,6 +90,16 @@ exports.updateTranslation = asyncHandler(async (req, res, next) => {
     );
   }
 
+  // Make sure user is translation owner
+  if (translation.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update translation ${translation._id}`,
+        401
+      )
+    );
+  }
+
   translation = await Translation.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -100,6 +121,16 @@ exports.deleteTranslation = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`No translation with the id of ${req.params.id}`),
       404
+    );
+  }
+
+  // Make sure user is translation owner
+  if (translation.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete translation ${translation._id}`,
+        401
+      )
     );
   }
 
