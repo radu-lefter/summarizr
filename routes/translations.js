@@ -8,10 +8,11 @@ const {
 } = require("../controllers/translations");
 
 const Translation = require("../models/Translation");
-const advancedResults = require("../middleware/advancedResults");
+
 
 const router = express.Router({ mergeParams: true });
 
+const advancedResults = require("../middleware/advancedResults");
 const { protect, authorize } = require('../middleware/auth');
 
 router

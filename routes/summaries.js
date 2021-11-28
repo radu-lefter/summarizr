@@ -13,10 +13,11 @@ const translationRouter = require('./translations');
 
 const router = express.Router();
 
+const advancedResults = require('../middleware/advancedResults');
 const { protect, authorize } = require('../middleware/auth');
 
 const Summary = require('../models/Summary');
-const advancedResults = require('../middleware/advancedResults');
+
 
 // Re-route into other resource routers
 router.use('/:summaryId/translations', translationRouter);

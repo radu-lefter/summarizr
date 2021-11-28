@@ -20,6 +20,7 @@ connectDB();
 const summaries = require('./routes/summaries');
 const translations = require('./routes/translations');
 const auth = require('./routes/auth');
+const users = require('./routes/users');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/summaries', summaries);
 app.use('/api/v1/translations', translations);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
 
 app.use(errorHandler);
   
