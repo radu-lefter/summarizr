@@ -10,6 +10,7 @@ const {
 
 // Include other resource routers
 const translationRouter = require('./translations');
+const reviewRouter = require('./reviews');
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ const Summary = require('../models/Summary');
 
 // Re-route into other resource routers
 router.use('/:summaryId/translations', translationRouter);
+router.use('/:summaryId/reviews', reviewRouter);
 
 router.route('/:id/photo').put(protect, authorize('publisher', 'admin'), summaryPhotoUpload);
 
